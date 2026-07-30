@@ -20,8 +20,85 @@ a:not([class]) {
   text-underline-offset: 0.18em;
 }
 
+// ---------------------------------------------------------------------------
+// Full-bleed layout: pin sidebar left, main fills remaining width (fluid)
+// Just the Docs centers a fixed content+nav slab; undo that gutters effect.
+// ---------------------------------------------------------------------------
+@media (min-width: 50rem) {
+  .side-bar {
+    width: 17rem !important;
+    min-width: 17rem !important;
+  }
+
+  .side-bar + .main {
+    margin-left: 17rem !important;
+  }
+
+  .main {
+    max-width: none !important;
+    margin: 0 !important;
+    width: auto !important;
+  }
+
+  .site-nav,
+  .site-header,
+  .site-footer {
+    width: 100% !important;
+  }
+}
+
+@media (min-width: 66.5rem) {
+  .side-bar {
+    width: 18rem !important;
+    min-width: 18rem !important;
+  }
+
+  .side-bar + .main {
+    margin-left: 18rem !important;
+  }
+}
+
+.main-content-wrap {
+  max-width: min(90rem, 100%);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3vw, 2.75rem);
+  box-sizing: border-box;
+}
+
+// ---------------------------------------------------------------------------
+// Nav: strong active state + featured Home / Downloads
+// ---------------------------------------------------------------------------
+.nav-list .nav-list-item .nav-list-link {
+  border-left: 3px solid transparent;
+  border-radius: 0 4px 4px 0;
+}
+
 .nav-list .nav-list-item .nav-list-link.active {
   font-weight: 600;
+  color: #ffffff !important;
+  background-color: rgba(45, 212, 191, 0.16);
+  border-left-color: #2dd4bf;
+}
+
+// Always call out Home + Downloads in the sidebar
+.nav-list .nav-list-item .nav-list-link[href$="/EI-Documentation/"],
+.nav-list .nav-list-item .nav-list-link[href$="/EI-Documentation/index.html"],
+.nav-list .nav-list-item .nav-list-link[href*="/downloads"] {
+  color: #5eead4;
+  font-weight: 600;
+}
+
+.nav-list .nav-list-item .nav-list-link[href$="/EI-Documentation/"]::before,
+.nav-list .nav-list-item .nav-list-link[href$="/EI-Documentation/index.html"]::before,
+.nav-list .nav-list-item .nav-list-link[href*="/downloads"]::before {
+  content: "";
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-right: 0.45rem;
+  border-radius: 50%;
+  background: #2dd4bf;
+  vertical-align: middle;
 }
 
 .warning {
