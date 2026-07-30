@@ -1,40 +1,59 @@
 ---
-title: Downloads & versions
+title: Downloads and versions
 layout: default
-nav_order: 10
+parent: Overview
+nav_order: 3
 description: Installers and version history for Easy Inspection
 ---
 
-# Downloads & versions
+# Downloads and versions
 
-Use this page for Windows installers and a short version history.
+Windows installers and version history for Easy Inspection.
 
 {: .warning }
-Only install builds from a source you trust. Prefer signed `Setup.exe` packages when available. Keep a trained operator and a hardware e-stop ready when testing a new build against a live robot.
+Only install builds from a source you trust, and prefer signed installers. Do not upgrade a production station mid-shift. Validate a new build against a taught routine before running parts on it.
 
 ## Current release
 
 | Version | Date | Notes | Download |
-|---------|------|-------|----------|
-| **3.7.0** | — | Current app version in development (Teach / Run / factory / Modbus) | _Installer link TBD_ |
-
-When you publish a Squirrel installer, drop the file into GitHub **Releases** (app repo or this docs repo) and replace the TBD cell with a direct link.
-
-## How to publish an installer here
-
-1. Build with `npm run make` in the Easy Inspection app repo (produces `EasyInspectionSetup.exe` under `out/make/...`).
-2. Create a [GitHub Release](https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository) (tag e.g. `v3.7.0`) and attach the Setup.exe.
-3. Update the table above with the version, date, short notes, and the release asset URL.
+|---|---|---|---|
+| **3.7.0** | — | Teach, run, factory mode, Modbus bridge, Cognex result polling | *Installer link to be added* |
 
 ## Older versions
 
 | Version | Date | Notes | Download |
-|---------|------|-------|----------|
-| — | — | No archived public builds listed yet | — |
+|---|---|---|---|
+| — | — | No archived public builds published yet | — |
+
+---
 
 ## Install notes
 
-- Target OS: **Windows** (Squirrel installer).
-- End-user machines do **not** need Node, ROS2, Pixi, or Visual Studio — the packaged app includes required sidecars.
-- After install, configure the robot URL and API token in **Settings** — see [Connect the robot](connect-robot.md).
-- App data stays under `%APPDATA%\Easy Inspection\` across upgrades — see [Data & backup](data.md).
+- **Platform:** Windows. The installer is a Squirrel-based `Setup.exe`.
+- **No developer tooling needed.** Operator and integrator machines do not need Node, Python, ROS 2, or Visual Studio. Everything the app needs ships inside the installer.
+- **Not portable as a folder.** The unpacked application directory depends on the files beside it. To move a build, copy the whole directory, or reinstall from `Setup.exe`.
+- **After installing,** configure the robot connection in **Settings** — see [Connect the robot]({{ site.baseurl }}/connect-robot.html).
+
+## Upgrading
+
+Application data lives outside the install directory, so upgrading in place keeps your projects, routines, preferences, and scan history. See [Projects, storage and backup]({{ site.baseurl }}/data.html).
+
+Before upgrading a commissioned station:
+
+1. Export a `.ie` package of the production project as a backup.
+2. Note the current version in case you need to roll back.
+3. After upgrading, run one validation scan before releasing the station back to production.
+
+{: .warning }
+The robot API token is encrypted per Windows user and machine. It does not transfer to a different PC, and it cannot be recovered from a copied data folder. Keep the token available separately when you re-image or replace a station.
+
+---
+
+## Publishing a build to this page
+
+For whoever maintains releases:
+
+1. Build the installer in the application repository (`npm run make`), which writes a `Setup.exe` under `out/make/`.
+2. Create a GitHub Release tagged with the version, for example `v3.7.0`, and attach the installer.
+3. Update the table above with the version, date, a one-line summary of what changed, and a direct link to the release asset.
+4. Move the previous entry into **Older versions**.

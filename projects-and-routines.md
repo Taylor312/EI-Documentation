@@ -1,36 +1,84 @@
 ---
-title: Projects & routines
+title: Projects and routines
 layout: default
-nav_order: 5
+parent: Setup and integration
+nav_order: 8
 ---
 
-# Projects & routines
+# Projects and routines
 
-Use **Projects** to organize inspection work, and **Routine Editor** to author the motion / inspection sequence.
+**Prerequisites:** none, though teaching requires a connected or simulated robot.
 
-## Typical flow
+## How work is organized
 
-1. Create or open a project in **Projects**.
-2. Edit the routine in **Routine Editor** (waypoints, schema steps, clearance, homes).
-3. Save the schema to the routine when the teach is ready.
-4. Validate with **Test Run** (live or offline) before production use.
-5. Optionally export a portable **`.ie`** package for backup or another PC — see [Data & backup](data.md).
+| Level | What it is |
+|---|---|
+| **Project** | A station or a family of parts. Holds one master schema and any number of routines. |
+| **Routine** | One part program: its waypoints, no-go volumes, home points, and compiled output. |
 
-## Where data is stored
+A project is what factory mode locks onto. Operators pick a routine within that project; they cannot change the project. So group parts that run on the same station into one project.
 
-Day-to-day editing writes to local AppData (`projects.json`), **not** to Git. Reinstalling the app usually keeps projects; wiping AppData does not.
+{: .screenshot }
+The Projects screen with a red box around the saved projects grid and the Create new project button.
 
-## Offline vs live
+## Create or open a project
 
-| Mode | What it is for |
-|------|----------------|
-| Offline teach / Move | Capture waypoints and homes without REST motion |
-| Offline schema play | Simulate the compiled routine path on the PC |
-| Live | Real controller telemetry and motion |
+From **Projects**:
 
-Teach jog and schema play are separate paths — do not assume one offline mode covers both.
+- **Create new project** — starts an empty project.
+- **Upload .ie file** — imports a project package exported from another station.
+- Selecting a saved project card opens it.
 
-## Notes
+With a project open you can rename it inline, **Switch project**, **Create new project**, or **Close project**.
 
-- Compiled routines include Standard Bots routine metadata (for example `"motionPlanner": "ROS2"`). That field is vendor routine metadata and is unrelated to any parked Electron ROS2 sidecar used in some development builds.
-- Schema / compile issues are separate from controller auth failures (`401` on motion APIs). Fix the token first if Play fails with unauthorized.
+## Routines inside a project
+
+With a project open:
+
+- **New routine** creates a part routine.
+- Each routine card carries a **Part name** field and opens into the [Routine Editor]({{ site.baseurl }}/teach-routine.html).
+- Routines can be deleted from their card.
+
+{: .screenshot }
+An open project with red boxes around the New routine button and the Part name field on a routine card.
+
+{: .warning }
+Routine order matters. Each routine gets a 1-based index that the robot selects through the Modbus **Routine** register. Reordering or deleting routines changes those indices, so recompile and redeploy the master schema afterwards, and re-verify that operators' routine choices still map to the right parts.
+
+## The master schema
+
+A project has one **master schema**: a single Standard Bots routine containing every taught part routine as a branch. At run time the robot reads the Modbus **Routine** register and executes the matching branch.
+
+This is why the whole project deploys as one routine rather than one routine per part.
+
+The **Master schema** section of the project screen provides:
+
+- **Go to master schema upload page** — the deployment workflow
+- **Load master as default** — makes this the routine the app plays
+
+Full detail in [Compile and deploy the schema]({{ site.baseurl }}/deploy-schema.html).
+
+## Portable `.ie` packages
+
+**Download .ie package** exports the open project as a single file. It is a ZIP archive containing the project definition and, per routine, the waypoints, compiled schema, clearance volumes, and metadata.
+
+Use it to:
+
+- Back up a commissioned station before an upgrade or re-teach
+- Move a project to another PC
+- Hand a configuration to someone else for review
+
+Importing assigns fresh internal identifiers, so importing a package twice creates two independent copies rather than overwriting.
+
+{: .warning }
+A `.ie` package does not contain the robot API token. That is encrypted per Windows user and machine and must be re-entered on the destination PC. See [Projects, storage and backup]({{ site.baseurl }}/data.html).
+
+## Where this data lives
+
+Projects are stored in the application data folder on the PC, not in the installation directory and not in any repository. Reinstalling or upgrading the app leaves them in place; wiping the data folder destroys them.
+
+Details, file names, and backup guidance are in [Projects, storage and backup]({{ site.baseurl }}/data.html).
+
+## Next
+
+Continue to [Teaching a routine]({{ site.baseurl }}/teach-routine.html).

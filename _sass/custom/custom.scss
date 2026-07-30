@@ -21,23 +21,37 @@ a:not([class]) {
 }
 
 // ---------------------------------------------------------------------------
-// Full-bleed layout: pin sidebar left, main fills remaining width (fluid)
-// Just the Docs centers a fixed content+nav slab; undo that gutters effect.
+// Full-bleed layout: pin sidebar left, main fills remaining width (fluid).
+// Keep sidebar above main so nav links stay clickable (main must not steal hits).
 // ---------------------------------------------------------------------------
+.side-bar {
+  z-index: 20 !important;
+  pointer-events: auto;
+}
+
+.side-bar a,
+.side-bar button {
+  pointer-events: auto;
+  position: relative;
+  z-index: 1;
+}
+
 @media (min-width: 50rem) {
   .side-bar {
     width: 17rem !important;
     min-width: 17rem !important;
   }
 
-  .side-bar + .main {
-    margin-left: 17rem !important;
-  }
-
+  // Set margin-left on .main directly — avoid `margin: 0` wiping it out
   .main {
     max-width: none !important;
-    margin: 0 !important;
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+    margin-left: 17rem !important;
     width: auto !important;
+    position: relative;
+    z-index: 1;
   }
 
   .site-nav,
@@ -53,7 +67,7 @@ a:not([class]) {
     min-width: 18rem !important;
   }
 
-  .side-bar + .main {
+  .main {
     margin-left: 18rem !important;
   }
 }
@@ -66,8 +80,23 @@ a:not([class]) {
 }
 
 // ---------------------------------------------------------------------------
-// Nav: strong active state + featured Home / Downloads
+// Nav: category parents bold; active + featured children
 // ---------------------------------------------------------------------------
+
+// Top-level category labels (Overview, Setup and integration, Reference, Operator manual)
+.site-nav > .nav-list > .nav-list-item > .nav-list-link {
+  font-weight: 700;
+  color: #ffffff !important;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+// Keep category children expanded in the sidebar
+.site-nav > .nav-list > .nav-list-item > .nav-list {
+  display: block !important;
+}
+
 .nav-list .nav-list-item .nav-list-link {
   border-left: 3px solid transparent;
   border-radius: 0 4px 4px 0;
@@ -80,25 +109,18 @@ a:not([class]) {
   border-left-color: #2dd4bf;
 }
 
-// Always call out Home + Downloads in the sidebar
-.nav-list .nav-list-item .nav-list-link[href$="/EI-Documentation/"],
-.nav-list .nav-list-item .nav-list-link[href$="/EI-Documentation/index.html"],
-.nav-list .nav-list-item .nav-list-link[href*="/downloads"] {
-  color: #5eead4;
-  font-weight: 600;
+// Child pages under categories — normal weight, not uppercase
+.site-nav > .nav-list > .nav-list-item > .nav-list .nav-list-link {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.01em;
+  font-size: 0.875rem;
+  color: #d7e4ea;
 }
 
-.nav-list .nav-list-item .nav-list-link[href$="/EI-Documentation/"]::before,
-.nav-list .nav-list-item .nav-list-link[href$="/EI-Documentation/index.html"]::before,
-.nav-list .nav-list-item .nav-list-link[href*="/downloads"]::before {
-  content: "";
-  display: inline-block;
-  width: 0.4rem;
-  height: 0.4rem;
-  margin-right: 0.45rem;
-  border-radius: 50%;
-  background: #2dd4bf;
-  vertical-align: middle;
+.site-nav > .nav-list > .nav-list-item > .nav-list .nav-list-link[href*="/downloads"] {
+  color: #5eead4;
+  font-weight: 600;
 }
 
 .warning {
@@ -106,6 +128,18 @@ a:not([class]) {
   border-left: 4px solid #e85d5d;
   padding: 0.75rem 1rem;
   border-radius: 0 4px 4px 0;
+}
+
+// Placeholder for an annotated screenshot that has not been captured yet.
+// Dashed so it reads as "to be replaced" rather than finished content.
+.screenshot {
+  background-color: rgba(45, 212, 191, 0.07);
+  border: 1px dashed #2dd4bf;
+  border-left: 4px solid #2dd4bf;
+  border-radius: 0 4px 4px 0;
+  padding: 0.75rem 1rem;
+  font-style: italic;
+  color: #b8ccd6;
 }
 
 .main-content table th {
