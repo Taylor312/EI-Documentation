@@ -12,7 +12,8 @@ This documentation is published with **GitHub Pages** using the [Just the Docs](
 |------|--------|
 | Source repo | [Taylor312/EI-Documentation](https://github.com/Taylor312/EI-Documentation) |
 | Live site | [taylor312.github.io/EI-Documentation](https://taylor312.github.io/EI-Documentation/) |
-| Theme | `just-the-docs` 0.12.0 |
+| Theme | `just-the-docs` 0.12.0 (`color_scheme: ei`) |
+| Font | Oxanium |
 
 ## Enable GitHub Pages (one-time)
 

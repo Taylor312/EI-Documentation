@@ -19,6 +19,7 @@ Operator and setup documentation for **Easy Inspection** — the desktop app for
 6. Configure [Factory mode](factory-config.md) when locking the HMI to one project.
 7. When needed, set up [Modbus](modbus.md) for plant I/O.
 8. Know where [data lives](data.md) (AppData, `.ie` packages).
+9. Get installers from [Downloads & versions](downloads.md).
 
 {: .warning }
 This software can command physical industrial machinery. Keep a trained operator at the hardware emergency stop. The in-app red button and Spacebar are a **software** e-stop only — not a substitute for a hardwired safety circuit.

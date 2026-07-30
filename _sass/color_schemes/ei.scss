@@ -1,0 +1,21 @@
+@import "./color_schemes/dark";
+
+// Easy Inspection — dark gunmetal + cyan (aligned with app tokens)
+$body-background-color: #06141b;
+$sidebar-color: #0a1a22;
+$body-heading-color: #ffffff;
+$body-text-color: #d7e4ea;
+$link-color: #2dd4bf;
+$nav-child-link-color: #9aafb8;
+$base-button-color: #11212d;
+$btn-primary-color: #0f766e;
+$code-background-color: #0a1620;
+$code-linenumber-color: #d7e4ea;
+$feedback-color: #0d1f28;
+$table-background-color: #11212d;
+$search-background-color: #11212d;
+$search-result-preview-color: #9aafb8;
+$border-color: #253745;
+
+$body-font-family: "Oxanium", system-ui, -apple-system, "Segoe UI", sans-serif;
+$mono-font-family: "Cascadia Code", Consolas, "SFMono-Regular", monospace;

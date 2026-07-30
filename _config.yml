@@ -20,8 +20,13 @@ search:
   preview_words_before: 5
   preview_words_after: 10
 
-# Color scheme: light (default) or dark
-# color_scheme: dark
+# Custom scheme: dark gunmetal + cyan, Oxanium (see _sass/color_schemes/ei.scss)
+color_scheme: ei
+
+callouts:
+  warning:
+    title: Warning
+    color: red
 
 # Footer content
 footer_content: 'Easy Inspection documentation. Use with a trained operator and a hardwired emergency stop.'
